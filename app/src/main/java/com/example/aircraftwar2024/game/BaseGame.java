@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import androidx.annotation.NonNull;
 import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractAircraft;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
@@ -44,6 +47,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //绘图的画布
     private final Paint mPaint;
+    private final Paint mTextPaint;
 
     //点击屏幕位置
     float clickX = 0, clickY=0;
@@ -135,6 +139,12 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
 //        mbLoop = true;
         mPaint = new Paint();  //设置画笔
+        mTextPaint = new Paint();
+        mTextPaint.setTextSize(50);
+        mTextPaint.setTextAlign(Paint.Align.LEFT);
+//        mTextPaint.setColor(getResources().getColor(R.color.red));
+//        mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        mTextPaint.setColor(Color.RED);
         mSurfaceHolder = this.getHolder();
         mSurfaceHolder.addCallback(this);
         this.setFocusable(true);
@@ -474,11 +484,20 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     private void paintScoreAndLife() {
         /**TODO:动态绘制文本框显示英雄机的分数和生命值**/
+//        Log.v("info", "Painting Text");
+//        Paint paint = new Paint();
+//        paint.setColor(getResources().getColor(R.color.red));
+////        paint.setTextAlign(Paint.Align.LEFT);
+//        paint.setTextSize(50);
+        try {
+            canvas.drawText("Score: " + score, 0, 60, mTextPaint);
+            canvas.drawText("HP: " + heroAircraft.getHp(), 0, 120, mTextPaint);
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
     }
-
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        /*TODO*/
         mbLoop = true;
         new Thread(this).start();
 
@@ -498,7 +517,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
-        /*TODO*/
         while (mbLoop) {
             action();
             draw();
