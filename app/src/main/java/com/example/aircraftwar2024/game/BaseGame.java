@@ -411,6 +411,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
+            GameActivity.handler.sendEmptyMessage(1);
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
