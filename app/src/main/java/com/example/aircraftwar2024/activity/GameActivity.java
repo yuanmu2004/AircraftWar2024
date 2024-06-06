@@ -36,7 +36,6 @@ public class GameActivity extends AppCompatActivity {
             gameType = getIntent().getIntExtra("gameType",1);
         }
 
-        /*TODO:根据用户选择的难度加载相应的游戏界面*/
         BaseGame baseGameView = getGameByModeID(gameType);
         setContentView(baseGameView);
 

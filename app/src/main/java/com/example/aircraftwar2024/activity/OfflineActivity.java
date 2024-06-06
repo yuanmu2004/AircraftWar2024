@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.example.aircraftwar2024.R;
 
 public class OfflineActivity extends AppCompatActivity {
+    boolean soundSwitch;
 
     class GameModeListener implements View.OnClickListener {
 
@@ -23,6 +24,7 @@ public class OfflineActivity extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
             intent.putExtra("gameType", gameType);
+            intent.putExtra("soundSwitch", soundSwitch);
             startActivity(intent);
         }
     }
@@ -35,7 +37,7 @@ public class OfflineActivity extends AppCompatActivity {
         Button easyModeButton = (Button) findViewById(R.id.easyModeButton);
         Button normalModeButton = (Button) findViewById(R.id.normalModeButton);
         Button hardModeButton = (Button) findViewById(R.id.hardModeButton);
-        Log.v("info", String.valueOf(getIntent().getBooleanExtra("soundSwitch", false)));
+        this.soundSwitch = getIntent().getBooleanExtra("soundSwitch", false);
         easyModeButton.setOnClickListener(new GameModeListener(0));
         normalModeButton.setOnClickListener(new GameModeListener(1));
         hardModeButton.setOnClickListener(new GameModeListener(2));
