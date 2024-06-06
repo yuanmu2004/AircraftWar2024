@@ -19,9 +19,12 @@ public class Record {
 
     @Override
     public int hashCode() {
-        return Objects.hash(record.values());
+        return Objects.hash(record);
     }
 
+    public Object get(String key) {
+        return record.get(key);
+    }
     public Map<String, Object> getRecord(){return record;}
 
 }
