@@ -29,6 +29,8 @@ public class RankListActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
+        ActivityManager activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(this);
 //        dataAccess.clear();
 //        dataAccess.add("Lin", 234, new Date(System.currentTimeMillis()).toString());
 //        dataAccess.add("Lu", 432, new Date(System.currentTimeMillis()).toString());
