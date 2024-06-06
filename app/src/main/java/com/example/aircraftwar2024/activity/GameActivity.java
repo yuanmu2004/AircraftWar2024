@@ -1,6 +1,8 @@
 package com.example.aircraftwar2024.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +18,7 @@ import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
 import com.example.aircraftwar2024.game.MediumGame;
+import com.example.aircraftwar2024.music.MyMediaPlayer;
 
 
 public class GameActivity extends AppCompatActivity {
@@ -26,6 +29,10 @@ public class GameActivity extends AppCompatActivity {
 
     public static Handler handler;
 
+    public static boolean soundOn;
+
+    //public MyMediaPlayer myMediaPlayer = new MyMediaPlayer(GameActivity.this,true);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +41,31 @@ public class GameActivity extends AppCompatActivity {
 
         if(getIntent() != null){
             gameType = getIntent().getIntExtra("gameType",1);
+            soundOn = getIntent().getBooleanExtra("soundOn", false);
+            Log.v("GAMEAC", String.valueOf(soundOn));
         }
 
+
         /*TODO:根据用户选择的难度加载相应的游戏界面*/
+        Log.v("GAME","LOADING GAME");
         BaseGame baseGameView = getGameByModeID(gameType);
+        //baseGameView.setSoundOn(soundOn);
+        Log.v("GAME","HAVE LOADED GAME");
         setContentView(baseGameView);
 
         handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what == 1)
-                    setContentView(R.layout.activity_rank_list);
+                Intent intent = null;
+                if (msg.what == 1) {
+                    intent = new Intent(GameActivity.this, RankListActivity.class);
+                    //should be: intent.putExtra(...) to transmit information
+                    intent.putExtra("score", baseGameView.getScore());
+                    //in RankListActivity use: getIntent().getIntExtra("score", 0) to get score
+                    startActivity(intent);
+                    //setContentView(R.layout.activity_rank_list);
+                }
             }
         };
     }
@@ -66,10 +86,10 @@ public class GameActivity extends AppCompatActivity {
 
     public BaseGame getGameByModeID(int gameType) {
         switch (gameType) {
-            case 0: return new EasyGame(this);
-            case 1: return new MediumGame(this);
-            case 2: return new HardGame(this);
-            default: return new MediumGame(this);
+            case 0: return new EasyGame(GameActivity.this);
+            case 1: return new MediumGame(GameActivity.this);
+            case 2: return new HardGame(GameActivity.this);
+            default: return new MediumGame(GameActivity.this);
         }
     }
 

@@ -23,6 +23,7 @@ public class OfflineActivity extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
             intent.putExtra("gameType", gameType);
+            intent.putExtra("soundOn", getIntent().getBooleanExtra("soundSwitch", false));
             startActivity(intent);
         }
     }
