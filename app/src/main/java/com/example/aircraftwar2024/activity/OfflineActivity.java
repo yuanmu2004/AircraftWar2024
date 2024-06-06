@@ -23,6 +23,7 @@ public class OfflineActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("gameType", gameType);
             intent.putExtra("soundSwitch", soundSwitch);
             startActivity(intent);

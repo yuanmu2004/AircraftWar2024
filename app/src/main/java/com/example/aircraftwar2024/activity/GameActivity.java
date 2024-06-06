@@ -1,7 +1,9 @@
 package com.example.aircraftwar2024.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,7 +23,8 @@ public class GameActivity extends AppCompatActivity {
     private int gameType=0;
     public static int screenWidth,screenHeight;
 
-    public static Handler handler;
+    public static Handler mHandler;
+//    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,21 @@ public class GameActivity extends AppCompatActivity {
         BaseGame baseGameView = getGameByModeID(gameType);
         setContentView(baseGameView);
 
-        handler = new Handler(getMainLooper()) {
+        mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what == 1)
-                    setContentView(R.layout.activity_record);
+                if (msg.what == 1){
+                    int score = baseGameView.getScore();
+                    Intent intent = new Intent(GameActivity.this, RankListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("gameType", gameType);
+                    intent.putExtra("score", score);
+//                    setContentView(R.layout.activity_record);
+                    startActivity(intent);
+                }
+
+
             }
         };
     }

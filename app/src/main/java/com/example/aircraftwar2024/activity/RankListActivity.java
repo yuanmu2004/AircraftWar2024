@@ -6,13 +6,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aircraftwar2024.DAO.Record;
 import com.example.aircraftwar2024.DAO.RecordDAO;
 import com.example.aircraftwar2024.DAO.RecordDAOSQLite;
 import com.example.aircraftwar2024.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RankListActivity extends AppCompatActivity {
 
@@ -32,6 +37,13 @@ public class RankListActivity extends AppCompatActivity {
 //        }
 
         setContentView(R.layout.activity_record);
+        int gameType = getIntent().getIntExtra("gameType", 1);
+        int score = getIntent().getIntExtra("score", -1);
+        if (score != -1) {
+            dataAccess.add("test", score, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        }
+        TextView titleView = (TextView) findViewById(R.id.rank_title);
+        titleView.setText(getTitleByGameType(gameType));
 
         ListView listView =(ListView) findViewById(R.id.rank_list);
 
@@ -70,6 +82,15 @@ public class RankListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private static String getTitleByGameType(int gameType) {
+        switch (gameType) {
+            case 0: return "EASY MODE";
+            case 1: return "NORMAL MODE";
+            case 2: return "HARD MODE";
+            default: return "NORMAL MODE";
+        }
     }
 
 

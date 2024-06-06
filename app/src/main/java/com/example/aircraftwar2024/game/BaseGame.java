@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -14,7 +12,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import androidx.annotation.NonNull;
 import com.example.aircraftwar2024.ImageManager;
-import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractAircraft;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
@@ -27,7 +24,7 @@ import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
-import com.example.aircraftwar2024.supply.BombSupply;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -421,7 +418,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
-            GameActivity.handler.sendEmptyMessage(1);
+            GameActivity.mHandler.sendEmptyMessage(1);
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
@@ -523,4 +520,5 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             draw();
         }
     }
+
 }
