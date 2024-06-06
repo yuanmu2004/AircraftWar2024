@@ -1,8 +1,7 @@
 package com.example.aircraftwar2024.supply;
 
 
-import java.util.LinkedList;
-import java.util.List;
+import com.example.aircraftwar2024.supply.notifier.BombNotifier;
 
 /**
  * 炸弹道具，自动触发
@@ -22,7 +21,10 @@ public class BombSupply extends AbstractFlyingSupply {
 
     @Override
     public void activate() {
-        System.out.println("BombSupply active");
+//        System.out.println("BombSupply active");
+        BombNotifier bombNotifier = BombNotifier.getInstance();
+        bombNotifier.notifyAllObservers();
     }
+
 
 }

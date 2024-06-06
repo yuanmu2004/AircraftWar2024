@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    android:background="@drawable/bg_start">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,11 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/backgroundImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bg_start" />
+<!--    <ImageView-->
+<!--        android:id="@+id/backgroundImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/bg_start" />-->
+
+
+
     
     <Button
         android:id="@+id/startButton"

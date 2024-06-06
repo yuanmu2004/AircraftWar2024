@@ -4,6 +4,7 @@ package com.example.aircraftwar2024.aircraft;
 import com.example.aircraftwar2024.basic.AbstractFlyingObject;
 import com.example.aircraftwar2024.bullet.AbstractBullet;
 import com.example.aircraftwar2024.shoot.ShootStrategy;
+import com.example.aircraftwar2024.supply.notifier.IBombObserver;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-public abstract class AbstractAircraft extends AbstractFlyingObject {
+public abstract class AbstractAircraft extends AbstractFlyingObject implements IBombObserver {
     /**
      * 生命值
      */

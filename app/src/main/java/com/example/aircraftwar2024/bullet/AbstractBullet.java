@@ -3,6 +3,7 @@ package com.example.aircraftwar2024.bullet;
 
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.basic.AbstractFlyingObject;
+import com.example.aircraftwar2024.supply.notifier.IBombObserver;
 
 /**
  * 子弹类。
@@ -10,7 +11,7 @@ import com.example.aircraftwar2024.basic.AbstractFlyingObject;
  *
  * @author hitsz
  */
-public class AbstractBullet extends AbstractFlyingObject{
+public abstract class AbstractBullet extends AbstractFlyingObject implements IBombObserver {
 
 
     private int power;
@@ -44,5 +45,6 @@ public class AbstractBullet extends AbstractFlyingObject{
     public int getPower() {
         return power;
     }
+
 
 }
