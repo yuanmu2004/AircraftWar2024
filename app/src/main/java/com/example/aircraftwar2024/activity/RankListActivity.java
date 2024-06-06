@@ -2,7 +2,6 @@ package com.example.aircraftwar2024.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,13 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar2024.DAO.RecordDAO;
 import com.example.aircraftwar2024.DAO.RecordDAOSQLite;
-import com.example.aircraftwar2024.DAO.Record;
 import com.example.aircraftwar2024.R;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class RankListActivity extends AppCompatActivity {
 
@@ -34,18 +27,20 @@ public class RankListActivity extends AppCompatActivity {
 //        dataAccess.clear();
 //        dataAccess.add("Lin", 234, new Date(System.currentTimeMillis()).toString());
 //        dataAccess.add("Lu", 432, new Date(System.currentTimeMillis()).toString());
+//        for (int i = 0; i <= 100; ++i) {
+//            dataAccess.add("Lin1111111111111111111", 1111111111, "0");
+//        }
 
+        setContentView(R.layout.activity_record);
 
-        setContentView(R.layout.activity_rank_list);
-
-        ListView listView =(ListView) findViewById(R.id.rankList);
+        ListView listView =(ListView) findViewById(R.id.rank_list);
 
 //        data = getData();
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,
                 dataAccess.getData(),
-                R.layout.listitem,
+                R.layout.activity_item,
                 new String[]{"rank", "name", "score", "date"},
                 new int[]{R.id.item_rank, R.id.item_name, R.id.item_score, R.id.item_date}
         );

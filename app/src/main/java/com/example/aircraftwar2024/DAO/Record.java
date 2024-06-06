@@ -17,10 +17,10 @@ public class Record {
         this.record.put("date", record.get("date"));
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(record);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(record);
+//    }
 
     public Object get(String key) {
         return record.get(key);

@@ -1,13 +1,10 @@
 package com.example.aircraftwar2024.activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what == 1)
-                    setContentView(R.layout.activity_rank_list);
+                    setContentView(R.layout.activity_record);
             }
         };
     }
