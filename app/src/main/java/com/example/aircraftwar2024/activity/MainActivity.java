@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(this);
         setContentView(R.layout.activity_main);
         RadioButton soundOn = (RadioButton) findViewById(R.id.soundOn);
         Button startButton = (Button) findViewById(R.id.startButton);

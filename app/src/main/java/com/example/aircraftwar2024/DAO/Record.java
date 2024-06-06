@@ -17,11 +17,14 @@ public class Record {
         this.record.put("date", record.get("date"));
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(record.values());
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(record);
+//    }
 
+    public Object get(String key) {
+        return record.get(key);
+    }
     public Map<String, Object> getRecord(){return record;}
 
 }

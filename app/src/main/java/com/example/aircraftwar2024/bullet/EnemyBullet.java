@@ -10,4 +10,9 @@ public class EnemyBullet extends AbstractBullet {
         super(locationX, locationY, speedX, speedY, power);
     }
 
+    @Override
+    public int transact() {
+        this.vanish();
+        return 0;
+    }
 }

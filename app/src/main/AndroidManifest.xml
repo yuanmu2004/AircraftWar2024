@@ -24,8 +24,6 @@
             android:exported="false"/>
 
 
-<!--        以下为测试需要将启动页改为记录记录页RankListActivity，恢复正常则把以下注释掉的内容恢复并删除以下内容-->
-
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">

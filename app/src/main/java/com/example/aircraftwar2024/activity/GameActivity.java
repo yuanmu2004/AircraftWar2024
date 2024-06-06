@@ -2,6 +2,7 @@ package com.example.aircraftwar2024.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +10,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +27,8 @@ public class GameActivity extends AppCompatActivity {
     private int gameType=0;
     public static int screenWidth,screenHeight;
 
-    public static Handler handler;
+    public static Handler mHandler;
+//    private int score;
 
     public static boolean soundOn;
 
@@ -36,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(this);
 
         getScreenHW();
 
@@ -48,24 +51,28 @@ public class GameActivity extends AppCompatActivity {
 
         /*TODO:根据用户选择的难度加载相应的游戏界面*/
         Log.v("GAME","LOADING GAME");
+
         BaseGame baseGameView = getGameByModeID(gameType);
         //baseGameView.setSoundOn(soundOn);
         Log.v("GAME","HAVE LOADED GAME");
         setContentView(baseGameView);
 
-        handler = new Handler(getMainLooper()) {
+        mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = null;
-                if (msg.what == 1) {
-                    intent = new Intent(GameActivity.this, RankListActivity.class);
-                    //should be: intent.putExtra(...) to transmit information
-                    intent.putExtra("score", baseGameView.getScore());
-                    //in RankListActivity use: getIntent().getIntExtra("score", 0) to get score
+
+
+                if (msg.what == 1){
+                    int score = baseGameView.getScore();
+                    Intent intent = new Intent(GameActivity.this, RankListActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("gameType", gameType);
+                    intent.putExtra("score", score);
+//                    setContentView(R.layout.activity_record);
                     startActivity(intent);
-                    //setContentView(R.layout.activity_rank_list);
                 }
+
             }
         };
     }

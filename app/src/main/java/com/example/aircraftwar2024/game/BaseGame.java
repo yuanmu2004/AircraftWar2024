@@ -28,8 +28,12 @@ import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
 import com.example.aircraftwar2024.music.MyMediaPlayer;
 import com.example.aircraftwar2024.music.MySoundPool;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
+
 import com.example.aircraftwar2024.supply.BombSupply;
 import com.example.aircraftwar2024.supply.FireSupply;
+
+import com.example.aircraftwar2024.supply.notifier.BombNotifier;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +54,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //绘图的画布
     private final Paint mPaint;
+    private final Paint mTextPaint;
 
     //点击屏幕位置
     float clickX = 0, clickY=0;
@@ -134,6 +139,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final EnemyFactory mobEnemyFactory;
     private final EnemyFactory eliteEnemyFactory;
     private final EnemyFactory bossEnemyFactory;
+
+
+    private final BombNotifier bombNotifier;
     private final Random random = new Random();
 
     private MyMediaPlayer myMediaPlayer;
@@ -153,6 +161,12 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
 //        mbLoop = true;
         mPaint = new Paint();  //设置画笔
+        mTextPaint = new Paint();
+        mTextPaint.setTextSize(50);
+        mTextPaint.setTextAlign(Paint.Align.LEFT);
+//        mTextPaint.setColor(getResources().getColor(R.color.red));
+//        mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        mTextPaint.setColor(Color.RED);
         mSurfaceHolder = this.getHolder();
         mSurfaceHolder.addCallback(this);
         this.setFocusable(true);
@@ -170,6 +184,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         mobEnemyFactory = new MobFactory();
         eliteEnemyFactory = new EliteFactory();
         bossEnemyFactory = new BossFactory();
+
+        bombNotifier = BombNotifier.getInstance();
 
         heroController();
     }
@@ -219,6 +235,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
             suppliesMoveAction();
 
+            score += bombNotifierFlushAction();
+
             // 撞击检测
             try {
 
@@ -231,6 +249,14 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         };
         task.run();
     }
+
+    private int bombNotifierFlushAction() {
+        bombNotifier.removeAllObservers();
+        bombNotifier.addAllObservers(enemyAircrafts);
+        bombNotifier.addAllObservers(enemyBullets);
+        return bombNotifier.syncScore();
+    }
+
     /**
      * 每个时刻均调用一次。
      * 普通和困难模式随着时间增加会提高游戏难度
@@ -449,7 +475,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             gameOverFlag = true;
             mbLoop = false;
             myMediaPlayer.shutup();
-            GameActivity.handler.sendEmptyMessage(1);
+            GameActivity.mHandler.sendEmptyMessage(1);
+
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
@@ -513,11 +540,20 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     private void paintScoreAndLife() {
         /**TODO:动态绘制文本框显示英雄机的分数和生命值**/
+//        Log.v("info", "Painting Text");
+//        Paint paint = new Paint();
+//        paint.setColor(getResources().getColor(R.color.red));
+////        paint.setTextAlign(Paint.Align.LEFT);
+//        paint.setTextSize(50);
+        try {
+            canvas.drawText("Score: " + score, 0, 60, mTextPaint);
+            canvas.drawText("HP: " + heroAircraft.getHp(), 0, 120, mTextPaint);
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
     }
-
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        /*TODO*/
         mbLoop = true;
         new Thread(this).start();
 
@@ -537,16 +573,17 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
-        /*TODO*/
         while (mbLoop) {
             action();
             draw();
         }
     }
 
+
 //    public void setSoundOn(boolean soundOn) {
 //        this.soundOn = soundOn;
 //        myMediaPlayer = new MyMediaPlayer(context, soundOn);
 //        mySoundPool = new MySoundPool(context, soundOn);
 //    }
+
 }

@@ -62,4 +62,9 @@ public class HeroAircraft extends AbstractAircraft {
         super.vanish();
         heroAircraft= null;
     }
+
+    @Override
+    public int transact() {
+        return 0;
+    }
 }
