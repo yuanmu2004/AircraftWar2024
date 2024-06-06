@@ -1,5 +1,6 @@
 package com.example.aircraftwar2024.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
@@ -21,6 +23,8 @@ public class GameActivity extends AppCompatActivity {
 
     private int gameType=0;
     public static int screenWidth,screenHeight;
+
+    public static Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,15 @@ public class GameActivity extends AppCompatActivity {
         /*TODO:根据用户选择的难度加载相应的游戏界面*/
         BaseGame baseGameView = getGameByModeID(gameType);
         setContentView(baseGameView);
+
+        handler = new Handler(getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == 1)
+                    setContentView(R.layout.activity_rank_list);
+            }
+        };
     }
 
     public void getScreenHW(){
@@ -65,4 +78,6 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }
