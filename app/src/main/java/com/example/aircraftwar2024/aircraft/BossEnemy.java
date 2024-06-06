@@ -64,5 +64,12 @@ public class BossEnemy extends AbstractEnemyAircraft {
         return 100;
     }
 
-
+    @Override
+    public int transact() {
+        this.decreaseHp(100);
+        if (this.notValid()) {
+            return score();
+        }
+        return 0;
+    }
 }

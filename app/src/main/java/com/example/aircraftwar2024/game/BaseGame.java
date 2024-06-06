@@ -24,6 +24,7 @@ import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
+import com.example.aircraftwar2024.supply.notifier.BombNotifier;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -129,6 +130,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final EnemyFactory mobEnemyFactory;
     private final EnemyFactory eliteEnemyFactory;
     private final EnemyFactory bossEnemyFactory;
+
+
+    private final BombNotifier bombNotifier;
     private final Random random = new Random();
 
     public BaseGame(Context context){
@@ -159,6 +163,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         mobEnemyFactory = new MobFactory();
         eliteEnemyFactory = new EliteFactory();
         bossEnemyFactory = new BossFactory();
+
+        bombNotifier = BombNotifier.getInstance();
 
         heroController();
     }
@@ -206,6 +212,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
             suppliesMoveAction();
 
+            score += bombNotifierFlushAction();
+
             // 撞击检测
             try {
 
@@ -218,6 +226,14 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         };
         task.run();
     }
+
+    private int bombNotifierFlushAction() {
+        bombNotifier.removeAllObservers();
+        bombNotifier.addAllObservers(enemyAircrafts);
+        bombNotifier.addAllObservers(enemyBullets);
+        return bombNotifier.syncScore();
+    }
+
     /**
      * 每个时刻均调用一次。
      * 普通和困难模式随着时间增加会提高游戏难度

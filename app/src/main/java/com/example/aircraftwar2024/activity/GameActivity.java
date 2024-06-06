@@ -29,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(this);
 
         getScreenHW();
 
@@ -46,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
                 if (msg.what == 1){
                     int score = baseGameView.getScore();
                     Intent intent = new Intent(GameActivity.this, RankListActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("gameType", gameType);
                     intent.putExtra("score", score);
 //                    setContentView(R.layout.activity_record);

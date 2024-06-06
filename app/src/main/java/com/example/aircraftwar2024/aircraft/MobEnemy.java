@@ -38,5 +38,9 @@ public class MobEnemy extends AbstractEnemyAircraft {
         return new LinkedList<>();
     }
 
-
+    @Override
+    public int transact() {
+        this.vanish();
+        return score();
+    }
 }

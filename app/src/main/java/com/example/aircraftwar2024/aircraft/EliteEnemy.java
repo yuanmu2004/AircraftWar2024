@@ -63,4 +63,10 @@ public class EliteEnemy extends AbstractEnemyAircraft {
     public int score() {
         return 30;
     }
+
+    @Override
+    public int transact() {
+        this.vanish();
+        return score();
+    }
 }
