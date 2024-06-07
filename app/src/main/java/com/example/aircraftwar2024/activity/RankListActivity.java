@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aircraftwar2024.DAO.Record;
 import com.example.aircraftwar2024.DAO.RecordDAO;
 import com.example.aircraftwar2024.DAO.RecordDAOSQLite;
 import com.example.aircraftwar2024.R;
@@ -61,9 +62,9 @@ public class RankListActivity extends AppCompatActivity {
         listView.setAdapter(simpleAdapter);
 
         // 设置 ListView 的点击事件监听器
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
                 new AlertDialog.Builder(RankListActivity.this)
@@ -81,7 +82,6 @@ public class RankListActivity extends AppCompatActivity {
                         .show();
 
 
-                return false;
             }
         });
     }
