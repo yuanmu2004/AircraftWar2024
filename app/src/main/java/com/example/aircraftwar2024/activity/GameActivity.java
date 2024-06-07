@@ -1,8 +1,5 @@
 package com.example.aircraftwar2024.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,12 +10,10 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
 import com.example.aircraftwar2024.game.MediumGame;
-import com.example.aircraftwar2024.music.MyMediaPlayer;
 
 
 public class GameActivity extends AppCompatActivity {
