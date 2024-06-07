@@ -4,19 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.aircraftwar2024.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityManager activityManager;
+    boolean backPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityManager activityManager = ActivityManager.getActivityManager();
-        activityManager.addActivity(this);
+        activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(MainActivity.this);
         setContentView(R.layout.activity_main);
         RadioButton soundOn = (RadioButton) findViewById(R.id.soundOn);
         Button startButton = (Button) findViewById(R.id.startButton);
@@ -30,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            activityManager.exitApp(MainActivity.this);
+        }
+        backPressedOnce = true;
+        Toast.makeText(MainActivity.this, "Click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            backPressedOnce = false;
+        }, 2000);
+    }
 }

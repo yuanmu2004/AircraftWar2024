@@ -13,6 +13,7 @@ import com.example.aircraftwar2024.R;
 
 public class OfflineActivity extends AppCompatActivity {
     boolean soundSwitch;
+    private ActivityManager activityManager;
 
     class GameModeListener implements View.OnClickListener {
 
@@ -36,8 +37,8 @@ public class OfflineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityManager activityManager = ActivityManager.getActivityManager();
-        activityManager.addActivity(this);
+        activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(OfflineActivity.this);
         setContentView(R.layout.activity_offline);
         Button easyModeButton = (Button) findViewById(R.id.easyModeButton);
         Button normalModeButton = (Button) findViewById(R.id.normalModeButton);
@@ -48,5 +49,9 @@ public class OfflineActivity extends AppCompatActivity {
         hardModeButton.setOnClickListener(new GameModeListener(2));
     }
 
-
+    @Override
+    public void onBackPressed() {
+        activityManager.finishActivity();
+//        super.onBackPressed();
+    }
 }

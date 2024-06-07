@@ -26,6 +26,7 @@ public class ActivityManager {
             activityStack = new Stack<Activity>();
         }
         activityStack.add(activity);
+        Log.v("info", "ActivityManager stack size:" + activityStack.size());
     }
 
     public Activity currentActivity(){
@@ -37,6 +38,7 @@ public class ActivityManager {
         Activity activity = activityStack.lastElement();
         finishActivity(activity);
     }
+
 
     public void finishActivity(Activity activity) {
         if (activity != null) {
@@ -63,6 +65,12 @@ public class ActivityManager {
         activityStack.clear();
     }
 
+    public void back2Title() {
+        finishActivity(RankListActivity.class);
+        finishActivity(GameActivity.class);
+        finishActivity(OfflineActivity.class);
+
+    }
     public void exitApp (Context context){
         try{
             finishAllActivity();

@@ -2,11 +2,15 @@ package com.example.aircraftwar2024.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,14 +26,18 @@ public class RankListActivity extends AppCompatActivity {
 
     private RecordDAO dataAccess = new RecordDAOSQLite(RankListActivity.this);
 
+    private ActivityManager activityManager;
+
+    boolean backPressedOnce = false;
+
 //    private List<Map<String, Object>> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-        ActivityManager activityManager = ActivityManager.getActivityManager();
-        activityManager.addActivity(this);
+        activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(RankListActivity.this);
 //        dataAccess.clear();
 //        dataAccess.add("Lin", 234, new Date(System.currentTimeMillis()).toString());
 //        dataAccess.add("Lu", 432, new Date(System.currentTimeMillis()).toString());
@@ -38,6 +46,9 @@ public class RankListActivity extends AppCompatActivity {
 //        }
 
         setContentView(R.layout.activity_record);
+        Button mainMenuButton = (Button) findViewById(R.id.main_menu_button);
+        Button exitButton = (Button) findViewById(R.id.exit_button);
+
         int gameType = getIntent().getIntExtra("gameType", 1);
         int score = getIntent().getIntExtra("score", -1);
         if (score != -1) {
@@ -67,8 +78,8 @@ public class RankListActivity extends AppCompatActivity {
 
 
                 new AlertDialog.Builder(RankListActivity.this)
-                        .setTitle("DELETE OPTION")
-                        .setMessage("DO U WAN TO DELETE?")
+                        .setTitle("Delete")
+                        .setMessage("Are you sure to DELETE this record?")
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -84,6 +95,38 @@ public class RankListActivity extends AppCompatActivity {
                 return false;
             }
         });
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(RankListActivity.this)
+                        .setTitle("Back to Title")
+                        .setMessage("Are you sure to BACK to title?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                activityManager.back2Title();
+                            }
+                        })
+                        .setNegativeButton("NO", null)
+                        .show();
+            }
+        });
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(RankListActivity.this)
+                        .setTitle("Exit")
+                        .setMessage("Are you sure to EXIT?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                activityManager.exitApp(RankListActivity.this);
+                            }
+                        })
+                        .setNegativeButton("NO", null)
+                        .show();
+            }
+        });
     }
 
     private static String getTitleByGameType(int gameType) {
@@ -94,6 +137,16 @@ public class RankListActivity extends AppCompatActivity {
             default: return "NORMAL MODE";
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            activityManager.exitApp(RankListActivity.this);
+        }
+        backPressedOnce = true;
+        Toast.makeText(RankListActivity.this, "Click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            backPressedOnce = false;
+        }, 2000);
+    }
 
 }

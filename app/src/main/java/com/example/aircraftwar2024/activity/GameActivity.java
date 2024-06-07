@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,13 +28,17 @@ public class GameActivity extends AppCompatActivity {
 
     public static boolean soundOn;
 
+    boolean backPressedOnce = false;
+
+    private ActivityManager activityManager;
+
     //public MyMediaPlayer myMediaPlayer = new MyMediaPlayer(GameActivity.this,true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityManager activityManager = ActivityManager.getActivityManager();
-        activityManager.addActivity(this);
+        activityManager = ActivityManager.getActivityManager();
+        activityManager.addActivity(GameActivity.this);
 
         getScreenHW();
 
@@ -96,10 +101,18 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (backPressedOnce) {
+            activityManager.exitApp(GameActivity.this);
+        }
+        backPressedOnce = true;
+        Toast.makeText(GameActivity.this, "Click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            backPressedOnce = false;
+        }, 2000);
     }
-
 
 }
