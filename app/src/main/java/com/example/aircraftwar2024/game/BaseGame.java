@@ -94,7 +94,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      * 普通和困难模式中
      * 当得分每超过一次bossScoreThreshold，则产生一次boss机
      */
-    protected int bossScoreThreshold = 1000;
+    protected int bossScoreThreshold = Integer.MAX_VALUE;
 
     /**
      * 时间间隔(ms)，控制刷新频率
