@@ -10,7 +10,6 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
@@ -26,6 +25,10 @@ public class GameActivity extends AppCompatActivity {
     public static Handler mHandler;
 //    private int score;
 
+    public static boolean soundOn;
+
+    //public MyMediaPlayer myMediaPlayer = new MyMediaPlayer(GameActivity.this,true);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,15 +39,25 @@ public class GameActivity extends AppCompatActivity {
 
         if(getIntent() != null){
             gameType = getIntent().getIntExtra("gameType",1);
+            soundOn = getIntent().getBooleanExtra("soundOn", false);
+            Log.v("GAMEAC", String.valueOf(soundOn));
         }
 
+
+        /*TODO:根据用户选择的难度加载相应的游戏界面*/
+        Log.v("GAME","LOADING GAME");
+
         BaseGame baseGameView = getGameByModeID(gameType);
+        //baseGameView.setSoundOn(soundOn);
+        Log.v("GAME","HAVE LOADED GAME");
         setContentView(baseGameView);
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+
+
                 if (msg.what == 1){
                     int score = baseGameView.getScore();
                     Intent intent = new Intent(GameActivity.this, RankListActivity.class);
@@ -54,7 +67,6 @@ public class GameActivity extends AppCompatActivity {
 //                    setContentView(R.layout.activity_record);
                     startActivity(intent);
                 }
-
 
             }
         };
@@ -76,10 +88,10 @@ public class GameActivity extends AppCompatActivity {
 
     public BaseGame getGameByModeID(int gameType) {
         switch (gameType) {
-            case 0: return new EasyGame(this);
-            case 1: return new MediumGame(this);
-            case 2: return new HardGame(this);
-            default: return new MediumGame(this);
+            case 0: return new EasyGame(GameActivity.this);
+            case 1: return new MediumGame(GameActivity.this);
+            case 2: return new HardGame(GameActivity.this);
+            default: return new MediumGame(GameActivity.this);
         }
     }
 

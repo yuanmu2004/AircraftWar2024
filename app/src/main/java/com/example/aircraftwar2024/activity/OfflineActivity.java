@@ -25,7 +25,8 @@ public class OfflineActivity extends AppCompatActivity {
             Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("gameType", gameType);
-            intent.putExtra("soundSwitch", soundSwitch);
+            intent.putExtra("soundOn", getIntent().getBooleanExtra("soundSwitch", false));
+
             startActivity(intent);
             finish();
         }

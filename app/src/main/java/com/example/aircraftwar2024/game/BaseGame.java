@@ -23,8 +23,14 @@ import com.example.aircraftwar2024.factory.enemy_factory.BossFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
+import com.example.aircraftwar2024.music.BgmPlayer;
+import com.example.aircraftwar2024.music.SoundPlayer;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
+
+import com.example.aircraftwar2024.supply.BombSupply;
+
 import com.example.aircraftwar2024.supply.notifier.BombNotifier;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -135,8 +141,20 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final BombNotifier bombNotifier;
     private final Random random = new Random();
 
+    private BgmPlayer bgmPlayer;
+    private SoundPlayer soundPlayer;
+
+    //private boolean soundOn = false;
+
+    private AbstractEnemyAircraft bossEnemy;
+
     public BaseGame(Context context){
         super(context);
+
+
+
+        bgmPlayer = new BgmPlayer(context, GameActivity.soundOn);
+        soundPlayer = new SoundPlayer(context, GameActivity.soundOn);
 
 //        mbLoop = true;
         mPaint = new Paint();  //设置画笔
@@ -182,6 +200,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+
 
         //new Thread(new Runnable() {
         Runnable task = () -> {
@@ -251,7 +270,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         // 普通模式boss机的血量不会变化
         if (this.getScore() >= bossScoreThreshold && !this.existBoss()) {
             bossScoreThreshold += bossScoreThreshold;
-            res.add(bossEnemyFactory.createEnemyAircraft(bossLevel));
+            bossEnemy = bossEnemyFactory.createEnemyAircraft(bossLevel);
+            res.add(bossEnemy);
+            bgmPlayer.toBossBgm();
         }
         return res;
     }
@@ -370,6 +391,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 continue;
             }
             if (heroAircraft.crash(bullet)) {
+
+                soundPlayer.playBulletHit();
+
                 heroAircraft.decreaseHp(bullet.getPower());
                 bullet.vanish();
             }
@@ -388,6 +412,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 }
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
+                    //播放bullet——hit
+                    soundPlayer.playBulletHit();
                     // 敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
@@ -412,6 +438,12 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             }
             if (heroAircraft.crash(flyingSupply) || flyingSupply.crash(heroAircraft)) {
                 flyingSupply.activate();
+
+                if (flyingSupply instanceof BombSupply)
+                    soundPlayer.playBombExplosion();
+                else
+                    soundPlayer.playGetSupply();
+
                 flyingSupply.vanish();
             }
         }
@@ -431,10 +463,18 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
         flyingSupplies.removeIf(AbstractFlyingObject::notValid);
 
+        if (bossEnemy != null && bossEnemy.notValid()) {
+            bossEnemy = null;
+            bgmPlayer.toNormalBgm();
+        }
+
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
+            bgmPlayer.shutUp();
+            soundPlayer.playGameOver();
             GameActivity.mHandler.sendEmptyMessage(1);
+
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
@@ -531,10 +571,18 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
+        bgmPlayer.bgmStart();
         while (mbLoop) {
             action();
             draw();
         }
     }
+
+
+//    public void setSoundOn(boolean soundOn) {
+//        this.soundOn = soundOn;
+//        myMediaPlayer = new MyMediaPlayer(context, soundOn);
+//        mySoundPool = new MySoundPool(context, soundOn);
+//    }
 
 }
