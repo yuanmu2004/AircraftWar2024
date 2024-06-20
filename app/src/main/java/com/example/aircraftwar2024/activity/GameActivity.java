@@ -85,8 +85,10 @@ public class GameActivity extends AppCompatActivity {
 
         //窗口的宽度
         screenWidth= dm.widthPixels;
+        activityManager.screenWidth = screenWidth;
         //窗口高度
         screenHeight = dm.heightPixels;
+        activityManager.screenHeight = screenHeight;
 
         Log.i(TAG, "screenWidth : " + screenWidth + " screenHeight : " + screenHeight);
     }

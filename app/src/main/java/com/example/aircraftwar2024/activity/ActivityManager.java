@@ -1,8 +1,11 @@
 package com.example.aircraftwar2024.activity;
 
 
+//import static androidx.core.view.ViewCompat.getDisplay;
+
 import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.util.Stack;
@@ -10,6 +13,9 @@ import java.util.Stack;
 public class ActivityManager {
     private static Stack<Activity> activityStack;
     private static ActivityManager instance;
+
+    public static int screenWidth;
+    public static int screenHeight;
 
     public ActivityManager() {
     }

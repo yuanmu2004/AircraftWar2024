@@ -49,7 +49,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static final String TAG = "BaseGame";
     boolean mbLoop; //控制绘画线程的标志位
     private final SurfaceHolder mSurfaceHolder;
-    private Canvas canvas;  //绘图的画布
+    protected Canvas canvas;  //绘图的画布
     private final Paint mPaint;
     private final Paint mTextPaint;
 
@@ -108,6 +108,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     protected int enemyMaxNumber = 5;
 
+    public boolean isGameOver() {
+        return gameOverFlag;
+    }
+
     private boolean gameOverFlag = false;
     private int score = 0;
 
@@ -141,8 +145,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final BombNotifier bombNotifier;
     private final Random random = new Random();
 
-    private BgmPlayer bgmPlayer;
-    private SoundPlayer soundPlayer;
+    protected BgmPlayer bgmPlayer;
+    protected SoundPlayer soundPlayer;
 
     //private boolean soundOn = false;
 
@@ -153,9 +157,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
 
 
-        bgmPlayer = new BgmPlayer(context, GameActivity.soundOn);
-        soundPlayer = new SoundPlayer(context, GameActivity.soundOn);
 
+        audioInit(context);
 //        mbLoop = true;
         mPaint = new Paint();  //设置画笔
         mTextPaint = new Paint();
@@ -195,6 +198,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         for (AbstractEnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
+    }
+    protected void audioInit(Context context) {
+        bgmPlayer = new BgmPlayer(context, GameActivity.soundOn);
+        soundPlayer = new SoundPlayer(context, GameActivity.soundOn);
     }
     /**
      * 游戏启动入口，执行游戏逻辑
@@ -338,6 +345,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 clickX = motionEvent.getX();
                 clickY = motionEvent.getY();
+                Log.v("HeroMove", "X:"+clickX+"  Y:"+clickY);
                 heroAircraft.setLocation(clickX, clickY);
 
                 if ( clickX<0 || clickX> GameActivity.screenWidth || clickY<0 || clickY>GameActivity.screenHeight){
@@ -470,14 +478,17 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
-            mbLoop = false;
             bgmPlayer.shutUp();
             soundPlayer.playGameOver();
-            GameActivity.mHandler.sendEmptyMessage(1);
-
+            gameOverAction();
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
+    }
+
+    protected void gameOverAction() {
+        mbLoop = false;
+        GameActivity.mHandler.sendEmptyMessage(1);
     }
 
     public void draw() {
@@ -536,7 +547,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         }
     }
 
-    private void paintScoreAndLife() {
+    protected void paintScoreAndLife() {
         /**TODO:动态绘制文本框显示英雄机的分数和生命值**/
 //        Log.v("info", "Painting Text");
 //        Paint paint = new Paint();
@@ -573,7 +584,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public void run() {
         bgmPlayer.bgmStart();
         while (mbLoop) {
-            action();
+            if (!gameOverFlag) action();
             draw();
         }
     }

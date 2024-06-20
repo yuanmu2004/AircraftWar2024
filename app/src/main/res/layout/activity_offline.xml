@@ -7,49 +7,49 @@
     tools:context=".activity.OfflineActivity">
 
     <Button
-        android:id="@+id/easyModeButton"
+        android:id="@+id/easy_mode_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/purple"
         android:text="Easy Mode"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/normalModeButton"
+        app:layout_constraintBottom_toTopOf="@+id/normal_mode_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reminderText" />
+        app:layout_constraintTop_toBottomOf="@+id/reminder_text" />
     <Button
-        android:id="@+id/normalModeButton"
+        android:id="@+id/normal_mode_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Normal Mode"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:backgroundTint="@color/purple"
-        app:layout_constraintTop_toBottomOf="@+id/easyModeButton"
-        app:layout_constraintBottom_toTopOf="@+id/hardModeButton"
+        app:layout_constraintTop_toBottomOf="@+id/easy_mode_button"
+        app:layout_constraintBottom_toTopOf="@+id/hard_mode_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <Button
-        android:id="@+id/hardModeButton"
+        android:id="@+id/hard_mode_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Hard Mode"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:backgroundTint="@color/purple"
-        app:layout_constraintTop_toBottomOf="@+id/normalModeButton"
+        app:layout_constraintTop_toBottomOf="@+id/normal_mode_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
-        android:id="@+id/reminderText"
+        android:id="@+id/reminder_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/easyModeButton"
+        app:layout_constraintBottom_toTopOf="@+id/easy_mode_button"
         android:text="Select Difficulty of Offline Mode:"
         android:textColor="@color/black"/>
 

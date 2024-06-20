@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="林顺喆 220111020"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,42 +25,59 @@
 
 
 
-    
-    <Button
-        android:id="@+id/startButton"
+    <LinearLayout
+        android:id="@+id/start_button_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple"
-        android:text="Start"
-        android:textSize="30sp"
-        android:textColor="@color/white"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <Button
+            android:id="@+id/offline_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/purple"
+            android:layout_marginBottom="10dp"
+            android:text="Play Offline"
+            android:textSize="30sp"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/online_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/purple"
+            android:layout_marginTop="10dp"
+            android:text="Play Online"
+            android:textSize="30sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
     <RadioGroup
-        android:id="@+id/soundSwitch"
+        android:id="@+id/sound_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintTop_toBottomOf="@+id/start_button_space"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/soundOn"
+            android:id="@+id/sound_on_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sound On"
             android:textColor="@color/white" />
 
         <RadioButton
-            android:id="@+id/soundOff"
+            android:id="@+id/sound_off_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="Sound Off"
-            android:textColor="@color/white"/></RadioGroup>
+            android:textColor="@color/white"/>
+    </RadioGroup>
 
 
 

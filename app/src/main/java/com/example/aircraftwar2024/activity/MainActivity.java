@@ -23,12 +23,22 @@ public class MainActivity extends AppCompatActivity {
         activityManager = ActivityManager.getActivityManager();
         activityManager.addActivity(MainActivity.this);
         setContentView(R.layout.activity_main);
-        RadioButton soundOn = (RadioButton) findViewById(R.id.soundOn);
-        Button startButton = (Button) findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        RadioButton soundOn = (RadioButton) findViewById(R.id.sound_on_radio_button);
+        Button offlineButton = (Button) findViewById(R.id.offline_button);
+        Button onlineButton = (Button) findViewById(R.id.online_button);
+        offlineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OfflineActivity.class);
+                intent.putExtra("soundSwitch", soundOn.isChecked());
+                startActivity(intent);
+            }
+        });
+
+        onlineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OnlineGameActivity.class);
                 intent.putExtra("soundSwitch", soundOn.isChecked());
                 startActivity(intent);
             }

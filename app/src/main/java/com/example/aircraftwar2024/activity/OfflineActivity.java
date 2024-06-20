@@ -2,10 +2,8 @@ package com.example.aircraftwar2024.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,9 +38,9 @@ public class OfflineActivity extends AppCompatActivity {
         activityManager = ActivityManager.getActivityManager();
         activityManager.addActivity(OfflineActivity.this);
         setContentView(R.layout.activity_offline);
-        Button easyModeButton = (Button) findViewById(R.id.easyModeButton);
-        Button normalModeButton = (Button) findViewById(R.id.normalModeButton);
-        Button hardModeButton = (Button) findViewById(R.id.hardModeButton);
+        Button easyModeButton = (Button) findViewById(R.id.easy_mode_button);
+        Button normalModeButton = (Button) findViewById(R.id.normal_mode_button);
+        Button hardModeButton = (Button) findViewById(R.id.hard_mode_button);
         this.soundSwitch = getIntent().getBooleanExtra("soundSwitch", false);
         easyModeButton.setOnClickListener(new GameModeListener(0));
         normalModeButton.setOnClickListener(new GameModeListener(1));
