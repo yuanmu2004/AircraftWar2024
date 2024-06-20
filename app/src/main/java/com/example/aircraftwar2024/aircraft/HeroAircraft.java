@@ -39,11 +39,11 @@ public class HeroAircraft extends AbstractAircraft {
         shootStrategy = new DirectShoot();
     }
 
-    @Override
-    public void setLocation(double locationX, double locationY) {
-        Log.v("HeroPos", this.locationX + " , " + this.locationY);
-        super.setLocation(locationX, locationY);
-    }
+//    @Override
+//    public void setLocation(double locationX, double locationY) {
+//        Log.v("HeroPos", this.locationX + " , " + this.locationY);
+//        super.setLocation(locationX, locationY);
+//    }
 
     /**
      * 通过单例模式获得初始化英雄机

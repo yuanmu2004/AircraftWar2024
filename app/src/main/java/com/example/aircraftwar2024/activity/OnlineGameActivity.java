@@ -116,6 +116,7 @@ public class OnlineGameActivity extends AppCompatActivity {
         intent.putExtra("1", score);
         intent.putExtra("2", rivalScore);
         startActivity(intent);
+        onlineGameView.interrupt();
     }
     public void getScreenHW(){
         //定义DisplayMetrics 对象
@@ -162,6 +163,7 @@ public class OnlineGameActivity extends AppCompatActivity {
 
 //                connectingMsgDialog.show();
                 toClientHandler.sendEmptyMessage(0);
+                Log.v("INFO", "Connecting to server");
                 socket.connect(new InetSocketAddress("10.0.2.2", 9999), 5000);
 //                connectingMsgDialog.dismiss();
                 toClientHandler.sendEmptyMessage(2);
@@ -183,7 +185,10 @@ public class OnlineGameActivity extends AppCompatActivity {
                                 int score = onlineGameView.getScore();
                                 writer.println(score);
                                 int rivalScore = Integer.parseInt(br.readLine());
+//                                Thread.sleep(1000);
+//                                socket.close();
                                 gameOver(score, rivalScore);
+                                return;
                             } else if (fromServer.equals("score request")) {
                                 int score = onlineGameView.getScore();
                                 writer.println(score);
@@ -215,7 +220,8 @@ public class OnlineGameActivity extends AppCompatActivity {
                 handleServerMsg.start();
 
 
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
 

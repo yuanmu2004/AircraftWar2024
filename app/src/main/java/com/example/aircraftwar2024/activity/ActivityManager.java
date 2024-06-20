@@ -8,6 +8,8 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.example.aircraftwar2024.game.OnlineGame;
+
 import java.util.Stack;
 
 public class ActivityManager {
@@ -75,7 +77,8 @@ public class ActivityManager {
         finishActivity(RankListActivity.class);
         finishActivity(GameActivity.class);
         finishActivity(OfflineActivity.class);
-
+        finishActivity(OnlineResultActivity.class);
+        finishActivity(OnlineGameActivity.class);
     }
     public void exitApp (Context context){
         try{

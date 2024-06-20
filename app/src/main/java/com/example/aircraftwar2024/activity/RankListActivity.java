@@ -46,8 +46,8 @@ public class RankListActivity extends AppCompatActivity {
 //        }
 
         setContentView(R.layout.activity_record);
-        Button mainMenuButton = (Button) findViewById(R.id.main_menu_button);
-        Button exitButton = (Button) findViewById(R.id.exit_button);
+        Button mainMenuButton = (Button) findViewById(R.id.main_menu_button_ranklist);
+        Button exitButton = (Button) findViewById(R.id.exit_button_ranklist);
 
         int gameType = getIntent().getIntExtra("gameType", 1);
         int score = getIntent().getIntExtra("score", -1);

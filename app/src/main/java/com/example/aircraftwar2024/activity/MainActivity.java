@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OfflineActivity.class);
-                intent.putExtra("soundSwitch", soundOn.isChecked());
+                intent.putExtra("soundOn", soundOn.isChecked());
                 startActivity(intent);
             }
         });
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OnlineGameActivity.class);
-                intent.putExtra("soundSwitch", soundOn.isChecked());
+                intent.putExtra("soundOn", soundOn.isChecked());
                 startActivity(intent);
             }
         });

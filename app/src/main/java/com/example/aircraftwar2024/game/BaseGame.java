@@ -47,7 +47,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Callback, Runnable{
 
     public static final String TAG = "BaseGame";
-    boolean mbLoop; //控制绘画线程的标志位
+    protected boolean mbLoop; //控制绘画线程的标志位
     private final SurfaceHolder mSurfaceHolder;
     protected Canvas canvas;  //绘图的画布
     private final Paint mPaint;
@@ -345,8 +345,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 clickX = motionEvent.getX();
                 clickY = motionEvent.getY();
-                Log.v("HeroMove", "X:"+clickX+"  Y:"+clickY);
-                heroAircraft.setLocation(clickX, clickY);
+//                Log.v("HeroMove", "X:"+clickX+"  Y:"+clickY);
+                if (!gameOverFlag) {
+                    heroAircraft.setLocation(clickX, clickY);
+                }
 
                 if ( clickX<0 || clickX> GameActivity.screenWidth || clickY<0 || clickY>GameActivity.screenHeight){
                     // 防止超出边界
@@ -501,7 +503,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             //绘制背景，图片滚动
             canvas.drawBitmap(backGround, 0, this.backGroundTop - backGround.getHeight(), mPaint);
             canvas.drawBitmap(backGround, 0, this.backGroundTop, mPaint);
-            backGroundTop += 1;
+            if (!gameOverFlag)
+                backGroundTop += 1;
             if (backGroundTop == GameActivity.screenHeight)
                 this.backGroundTop = 0;
 

@@ -24,10 +24,9 @@ public class OfflineActivity extends AppCompatActivity {
             Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("gameType", gameType);
-            intent.putExtra("soundOn", getIntent().getBooleanExtra("soundSwitch", false));
+            intent.putExtra("soundOn", getIntent().getBooleanExtra("soundOn", false));
 
             startActivity(intent);
-            finish();
         }
     }
 
@@ -41,7 +40,7 @@ public class OfflineActivity extends AppCompatActivity {
         Button easyModeButton = (Button) findViewById(R.id.easy_mode_button);
         Button normalModeButton = (Button) findViewById(R.id.normal_mode_button);
         Button hardModeButton = (Button) findViewById(R.id.hard_mode_button);
-        this.soundSwitch = getIntent().getBooleanExtra("soundSwitch", false);
+        this.soundSwitch = getIntent().getBooleanExtra("soundOn", false);
         easyModeButton.setOnClickListener(new GameModeListener(0));
         normalModeButton.setOnClickListener(new GameModeListener(1));
         hardModeButton.setOnClickListener(new GameModeListener(2));

@@ -53,12 +53,15 @@ public class OnlineGame extends BaseGame {
 
         }
     }
+    public void interrupt() {
+        mbLoop = false;
+    }
 
     @Override
     protected void paintScoreAndLife() {
         super.paintScoreAndLife();
         try {
-            canvas.drawText("Rival Score:" + rivalScore, 300, 60, mTextPaint);
+            canvas.drawText("Rival Score:" + rivalScore, 1000, 60, mTextPaint);
         }
         catch (Exception e) {
             e.printStackTrace();
